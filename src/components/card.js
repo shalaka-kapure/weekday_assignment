@@ -14,7 +14,7 @@ import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 
-function CardComponent() {
+function CardComponent({ job }) {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpansion = () => {
@@ -32,6 +32,7 @@ function CardComponent() {
           borderRadius: "20px !important",
           padding: "15px 5px 10px 10px!important",
           maxWidth: "360px",
+          boxShadow: "rgba(0, 0, 0, 0.25) 0px 1px 4px 0px !important"
         }}
       >
         <Box
@@ -46,24 +47,19 @@ function CardComponent() {
             border: "1px solid rgb(230, 230, 230)",
           }}
           color="text.secondary"
-          gutterBottom
         >
           <HourglassBottomTwoToneIcon style={{ color: "#93D2FF" }} /> Posted 10
           days ago
         </Box>
         <CardContent>
           <Box style={{ display: "flex", gap: "0.5rem" }}>
-            <img
-              src="https://storage.googleapis.com/weekday-assets/airtableAttachment_1713271734116_1ci60.png"
-              alt="logo"
-              className="logo"
-            />
+            <img src={job.logoUrl} alt="logo" className="logo" />
             <div>
               <div className="info-container">
-                <h3>DeGenerous</h3>
-                <h2>Frontend Engineer</h2>
+                <h3>{job.companyName}</h3>
+                <h2>{job.jobRole.charAt(0).toUpperCase() + job.jobRole.slice(1)}</h2>
               </div>
-              <p className="card-location">India</p>
+              <p className="card-location">{job.location.charAt(0).toUpperCase() + job.location.slice(1)}</p>
             </div>
           </Box>
           <Typography
@@ -78,14 +74,13 @@ function CardComponent() {
             }}
             color="rgb(77, 89, 106)"
           >
-            Estimated Salary: &#8377; 10-12 LPA{" "}
+            Estimated Salary: {job.salaryCurrencyCode}  {job.minJdSalary !== null ? job.minJdSalary : 0} - {job.maxJdSalary} 
             <CheckBoxIcon style={{ color: "#01BD0D" }} />
           </Typography>
           <Box style={{ height: expanded ? "auto" : "235px" }}>
             <Typography
-              sx={{ fontWeight: 500, fontFamily: "Lexend, sans-serif" }}
+              sx={{ fontWeight: 500, fontFamily: "Lexend, sans-serif", color:"rgba(0, 0, 0, 0.87)" }}
             >
-              {" "}
               About Company:
             </Typography>
             <Box
@@ -95,20 +90,10 @@ function CardComponent() {
                 whiteSpace: expanded ? "normal" : "wrap",
                 height: expanded ? "auto" : "180px",
                 position: "relative",
+                fontWeight:400
               }}
             >
-              This is a sample job and you must have displayed it to understand
-              that its not just some random lorem ipsum text but something which
-              was manually written. Oh well, if random text is what you were
-              looking for then here it is: Lorem Ipsum is simply dummy text of
-              the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an
-              unknown printer took a galley of type and scrambled it to make a
-              type specimen book. It has survived not only five centuries, but
-              also the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of
-              Letraset sheets containing Lorem Ipsum passages and now in this
-              assignment.
+              {job.jobDetailsFromCompany}
               {!expanded && (
                 <Box
                   sx={{
@@ -149,7 +134,7 @@ function CardComponent() {
           </Box>
           <div className="info-container" style={{ margin: "10px 0" }}>
             <h3>Minimum Experience</h3>
-            <h2 className="card-location">1 years</h2>
+            <h2 className="card-location">{job.minExp!== null ? job.minExp : 0} years</h2>
           </div>
         </CardContent>
         <CardActions>
@@ -171,6 +156,9 @@ function CardComponent() {
                 textTransform: "none",
                 width: "100%",
               }}
+              href={job.jdLink}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <BoltIcon style={{ color: "#FF822D" }} /> Easy Apply
             </Button>
@@ -184,12 +172,23 @@ function CardComponent() {
                 margin: "5px 0",
                 textTransform: "none",
                 width: "100%",
-                gap:"5px"
+                gap: "5px",
               }}
+              href={job.jdLink}
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Stack direction="row">
-                <Avatar alt="Remy Sharp" src="/assests/3.jpg" sx={{ filter: "blur(2px)" }}  />
-                <Avatar alt="Travis Howard" src="/assests/2.jpg" sx={{ filter: "blur(2px)" }} />
+                <Avatar
+                  alt="Remy Sharp"
+                  src="/assests/3.jpg"
+                  sx={{ filter: "blur(2px)" }}
+                />
+                <Avatar
+                  alt="Travis Howard"
+                  src="/assests/2.jpg"
+                  sx={{ filter: "blur(2px)" }}
+                />
               </Stack>
               Unlock referrals asks
             </Button>

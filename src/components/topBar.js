@@ -25,7 +25,6 @@ function Topbar() {
             id="demo-simple-select"
             value={age}
             label="Age"
-            labelPlacement="end"
             onChange={handleChange}
             endAdornment={
               <Divider orientation="vertical" variant="middle" flexItem />
