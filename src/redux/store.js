@@ -3,7 +3,7 @@ import JobReducer from "./JobReducer";
 
 const store = configureStore({
   reducer: {
-    job: JobReducer,
+    job: JobReducer
   },
 });
 export default store;

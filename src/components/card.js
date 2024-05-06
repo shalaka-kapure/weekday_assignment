@@ -74,7 +74,7 @@ function CardComponent({ job }) {
             }}
             color="rgb(77, 89, 106)"
           >
-            Estimated Salary: {job.salaryCurrencyCode}  {job.minJdSalary !== null ? job.minJdSalary : 0} - {job.maxJdSalary} 
+            Estimated Salary: {job.salaryCurrencyCode}  {job.minJdSalary !== null ? job.minJdSalary : 0} - {job.maxJdSalary !== null ? job.maxJdSalary : 0} 
             <CheckBoxIcon style={{ color: "#01BD0D" }} />
           </Typography>
           <Box style={{ height: expanded ? "auto" : "235px" }}>
