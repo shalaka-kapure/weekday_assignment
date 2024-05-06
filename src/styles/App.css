@@ -43,17 +43,37 @@ body {
   padding: 0 80px 0 0;
 }
 
-.MuiCardContent-root, .MuiCardActions-root {
-  padding-bottom: 0px!important;
+.MuiCardContent-root,
+.MuiCardActions-root {
+  padding-bottom: 0px !important;
 }
 
-
-@media (max-width: 435px) {
+@media (max-width: 825px) {
   .main-container {
     padding-left: 8px;
   }
 
   .card-container {
     padding: 0;
+  }
+}
+
+@media (max-width: 825px) {
+  .main-container {
+    padding-left: 8px;
+  }
+
+  .card-container {
+    padding: 0;
+  }
+}
+
+@media (min-width: 825px) and (max-width: 1025px) {
+  .main-container {
+    padding-left: 25px;
+  }
+
+  .card-container {
+    padding: 0 10px 0 0;
   }
 }
