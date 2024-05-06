@@ -3,6 +3,7 @@ import CardComponent from "./card";
 import { Grid, Typography } from "@mui/material";
 import { fetchJobs } from "../redux/JobReducer";
 import { useDispatch, useSelector } from "react-redux";
+import SearchOffIcon from "@mui/icons-material/SearchOff";
 import Loader from "./Loader";
 
 function CardContainer() {
@@ -12,6 +13,7 @@ function CardContainer() {
   const [page, setPage] = useState(1);
   const [noJobsMessageDisplayed, setNoJobsMessageDisplayed] = useState(false);
 
+  //infinite scrolling and dispatch logic 
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight =
@@ -28,28 +30,33 @@ function CardContainer() {
         html.offsetHeight
       );
       const windowBottom = windowHeight + window.pageYOffset;
+
       if (windowBottom >= docHeight && !isLoading) {
         setPage((prevPage) => prevPage + 1);
       }
     };
 
-    if (!isLoading && filteredJobs.length === 0 && noJobsMessageDisplayed) {
-      setNoJobsMessageDisplayed(false);
+    if (!isLoading && !filteredJobs && !noJobsMessageDisplayed) {
+      dispatch(fetchJobs({ limit: 50, offset: (page - 1) * 50 }));
     }
 
-    if (!isLoading && filteredJobs.length === 0 && !noJobsMessageDisplayed) {
+    if (!isLoading && filteredJobs.length === 0) {
+      setNoJobsMessageDisplayed(false);
+    } else {
       setNoJobsMessageDisplayed(true);
     }
 
-    dispatch(fetchJobs({ limit: 50, offset: (page - 1) * 50 }));
-
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, [dispatch, isLoading, page, filteredJobs.length, noJobsMessageDisplayed]);
 
+  const newFilteredJobs = [...filteredJobs];
+  console.log("filtered", newFilteredJobs);
+
   return (
     <Grid container spacing={0} className="card-container">
-      {filteredJobs.map((job) => (
+      {newFilteredJobs.map((job) => (
         <Grid
           key={job.jdUid}
           item
@@ -66,8 +73,9 @@ function CardContainer() {
           <Loader />
         </Grid>
       )}
-      {!isLoading && filteredJobs.length === 0 && noJobsMessageDisplayed && (
+      {!isLoading && newFilteredJobs.length === 0 && (
         <Grid item xs={12} sx={{ textAlign: "center", mt: 4 }}>
+          <SearchOffIcon sx={{ fontSize: 100 }}/>
           <Typography variant="h6">
             Oops, No Jobs available for this category at the moment
           </Typography>
@@ -78,4 +86,3 @@ function CardContainer() {
 }
 
 export default CardContainer;
-

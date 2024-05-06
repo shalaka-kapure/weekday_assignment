@@ -24,6 +24,7 @@ function Topbar() {
     dispatch(setFilter({ filterType, value }));
   };
 
+  //setting the jobs, location and tech stack filter values
   useEffect(() => {
     dispatch(fetchJobs({ limit: 50, offset: 0 })).then((data) => {
       if (Array.isArray(data.payload.jdList)) {
@@ -42,10 +43,11 @@ function Topbar() {
         console.error("Data payload is not an array:", data.payload.jdList);
       }
     });
-  }, [dispatch]);
+  }, []);
 
   return (
     <Grid container spacing={2}>
+      {/* Roles filter */}
       <Grid item xs={6} md={1.4}>
         <FormControl fullWidth>
           <InputLabel id="role-label">Roles</InputLabel>
@@ -68,6 +70,7 @@ function Topbar() {
           </Select>
         </FormControl>
       </Grid>
+      {/* Location filter */}
       <Grid item xs={6} md={1.4}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Location</InputLabel>
@@ -90,6 +93,7 @@ function Topbar() {
           </Select>
         </FormControl>
       </Grid>
+      {/* Experience filter */}
       <Grid item xs={6} md={1.5}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Experience</InputLabel>
@@ -117,6 +121,7 @@ function Topbar() {
           </Select>
         </FormControl>
       </Grid>
+      {/* Techstack filter */}
       <Grid item xs={6} md={1.5}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Tech Stack</InputLabel>
@@ -139,6 +144,7 @@ function Topbar() {
           </Select>
         </FormControl>
       </Grid>
+      {/* Min. base salary filter */}
       <Grid item xs={6} md={2}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">
@@ -168,6 +174,7 @@ function Topbar() {
           </Select>
         </FormControl>
       </Grid>
+      {/* Remote filter  */}
       <Grid item xs={6} md={1.4}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Remote</InputLabel>
@@ -187,6 +194,7 @@ function Topbar() {
           </Select>
         </FormControl>
       </Grid>
+      {/* Search  */}
       <Grid item xs={12} md={2}>
         <TextField
           id="outlined-basic"

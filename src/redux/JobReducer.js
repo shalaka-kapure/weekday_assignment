@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+//fetching the dynamic data
 export const fetchJobs = createAsyncThunk(
   "jobs/fetchJobs",
   async ({ limit, offset }, { rejectWithValue }) => {
@@ -40,6 +41,7 @@ const jobSlice = createSlice({
       minSalary: null,
       search: null,
     },
+    isLoading: false,
   },
   reducers: {
     setFilter: (state, action) => {
@@ -48,19 +50,8 @@ const jobSlice = createSlice({
         ...state.filters, 
         [filterType]: value 
       };
-      state.filteredJobs = applyFilters(state.jobs.jdList, state.filters);
+      state.filteredJobs = applyFilters(state.jobs, state.filters); 
     },  
-    clearFilters: (state) => {
-      state.filters = {
-        role: null,
-        location: null,
-        experience: null,
-        techStack: null,
-        remote: null,
-        minSalary: null,
-        search: null,
-      };
-    },
   },
   extraReducers: (builder) => {
         builder
@@ -70,16 +61,18 @@ const jobSlice = createSlice({
           .addCase(fetchJobs.fulfilled, (state, action) => {
             state.isLoading = false;
             state.jobs = action.payload;
-            state.filteredJobs = applyFilters(state.jobs.jdList, state.filters);
+            state.filteredJobs = applyFilters(state.jobs, state.filters);
           })          
           .addCase(fetchJobs.rejected, (state, action) => {
+            state.isLoading = false;
             state.error = action.error.message;
           });
       },
 });
 
+//helper function for filtering 
 const applyFilters = (jobs, filters) => {
-  return jobs.filter(job => {
+  return jobs.jdList.filter(job => {
     return (
       (filters.role === null || job.jobRole === filters.role) &&
       (filters.location === null || job.location === filters.location) &&
@@ -94,8 +87,6 @@ const applyFilters = (jobs, filters) => {
 
 export const {
   setFilter,
-  clearFilters,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;
-

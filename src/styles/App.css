@@ -52,4 +52,8 @@ body {
   .main-container {
     padding-left: 8px;
   }
+
+  .card-container {
+    padding: 0;
+  }
 }
