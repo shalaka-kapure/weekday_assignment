@@ -43,6 +43,7 @@ function Topbar() {
         console.error("Data payload is not an array:", data.payload.jdList);
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   return (

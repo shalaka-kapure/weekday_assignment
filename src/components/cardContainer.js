@@ -49,7 +49,7 @@ function CardContainer() {
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [dispatch, isLoading, page, filteredJobs.length, noJobsMessageDisplayed]);
+  }, [dispatch, isLoading, page, filteredJobs, noJobsMessageDisplayed]);
 
   const newFilteredJobs = [...filteredJobs];
   console.log("filtered", newFilteredJobs);
